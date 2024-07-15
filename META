@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define META 20
+
+// Función para avanzar de manera aleatoria
+int avanzar() {
+    return rand() % 3 + 1; // Avanza entre 1 y 3 pasos
+}
+
+// Función para mostrar la posición de los participantes
+void mostrarPosicion(int posicionJugador1, int posicionJugador2, int posicionComputadora) {
+    printf("Jugador 1: ");
+    for (int i = 1; i <= META; i++) {
+        if (i == posicionJugador1) {
+            printf("J1");
+        } else {
+            printf("-");
+        }
+    }
+    printf("\n");
+
+printf("Jugador 2: ");
+    for (int i = 1; i <= META; i++) {
+        if (i == posicionJugador2) {
+            printf("J2");
+        } else {
+            printf("-");
+        }
+    }
+    printf("\n");
+
+    printf("Computadora: ");
+    for (int i = 1; i <= META; i++) {
+        if (i == posicionComputadora) {
+            printf("C");
+        } else {
+            printf("-");
+        }
+    }
+    printf("\n");
+}
+int main() {
+    int posicionJugador1 = 0;
+    int posicionJugador2 = 0;
+    int posicionComputadora = 0;
+    int opcion;
+    srand(time(NULL));
+
+    printf("¡Bienvenido a la carrera!\n");
+
+    printf("Seleccione el modo de juego:\n");
+    printf("1. Jugador vs Computadora\n");
+    printf("2. Jugador 1 vs Jugador 2\n");
+    printf("Opción: ");
+    scanf("%d", &opcion);
+
+    switch (opcion) {
+        case 1:
+            while (posicionJugador1 < META && posicionComputadora < META) {
+                // Turno del Jugador 1
+                printf("\nJugador 1, presiona Enter para avanzar...\n");
+                getchar(); // Espera a que el jugador presione Enter
+                posicionJugador1 += avanzar();
+
+                // Turno de la Computadora
+                posicionComputadora += avanzar();
+
+                // Mostrar posiciones
+                system("clear"); // Limpiar pantalla (para sistemas UNIX-like)
+                mostrarPosicion(posicionJugador1, posicionJugador2, posicionComputadora);
+                printf("\n");
+
+                // Retardo para visualización
+                usleep(500000); // Retardo de 500 milisegundos (0.5 segundos)
+            }
+
+            // Determinar al ganador
+            if (posicionJugador1 >= META && posicionComputadora >= META) {
+                printf("\n¡Es un empate!\n");
+            } else if (posicionJugador1 >= META) {
+                printf("\n¡Felicidades! ¡Jugador 1 ha ganado contra la computadora!\n");
+            } else {
+                printf("\n¡La computadora ha ganado! ¡Inténtalo de nuevo, Jugador 1!\n");
+            }
+            break;
+
+ case 2:
+            while (posicionJugador1 < META && posicionJugador2 < META) {
+                // Turno del Jugador 1
+                printf("\nJugador 1, presiona Enter para avanzar...\n");
+                getchar(); // Espera a que el jugador presione Enter
+                posicionJugador1 += avanzar();
+
+                // Mostrar posiciones
+                system("clear"); // Limpiar pantalla (para sistemas UNIX-like)
+                mostrarPosicion(posicionJugador1, posicionJugador2, posicionComputadora);
+                printf("\n");
+
+                // Retardo para visualización
+                usleep(500000); // Retardo de 500 milisegundos (0.5 segundos)
+
+                // Turno del Jugador 2
+                printf("\nJugador 2, presiona Enter para avanzar...\n");
+                getchar(); // Espera a que el jugador presione Enter
+                posicionJugador2 += avanzar();
+
+                // Mostrar posiciones
+                system("clear"); // Limpiar pantalla (para sistemas UNIX-like)
+                mostrarPosicion(posicionJugador1, posicionJugador2, posicionComputadora);
+                printf("\n");
+
+ // Retardo para visualización
+                usleep(500000); // Retardo de 500 milisegundos (0.5 segundos)
+            }
+
+            // Determinar al ganador
+            if (posicionJugador1 >= META && posicionJugador2 >= META) {
+                printf("\n¡Es un empate entre Jugador 1 y Jugador 2!\n");
+            } else if (posicionJugador1 >= META) {
+                printf("\n¡Felicidades! ¡Jugador 1 ha ganado contra Jugador 2!\n");
+            } else {
+                printf("\n¡Felicidades! ¡Jugador 2 ha ganado contra Jugador 1!\n");
+            }
+            break;
+
+        default:
+            printf("Opción no válida. Saliendo del juego.\n");
+            break;
+    }
+    return 0;
+}
